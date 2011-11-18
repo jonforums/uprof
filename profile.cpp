@@ -93,6 +93,7 @@ VOID function_handler(RTN rtn, VOID *v)
     // Insert a call at the entry point of a routine to increment the call count
     RTN_InsertCall(rtn, IPOINT_BEFORE, (AFUNPTR)docount, IARG_PTR, &(rc->_rtnCount), IARG_END);
 
+    // TODO do I really care about function instruction count?
     // For each instruction of the routine
     for (INS ins = RTN_InsHead(rtn); INS_Valid(ins); ins = INS_Next(ins))
     {
@@ -108,23 +109,22 @@ VOID function_handler(RTN rtn, VOID *v)
 VOID app_exit_handler(INT32 code, VOID *v)
 {
 	// TODO enable cmd line option for output file
-    ofstream count("proccount.out");
+    ofstream data("profile_data.out");
 
-    count << setw(23) << "Procedure" << " "
-          << setw(15) << "Image" << " "
-          << setw(18) << "Address" << " "
-          << setw(12) << "Calls" << " "
-          << setw(12) << "Instructions" << endl;
+    data << "Procedure" << ","
+         << "Image" << ","
+         << "Address" << ","
+         << "Calls" << ","
+         << "Instructions" << endl;
 
-	// TODO use image basename
     for (RTN_COUNT * rc = RtnList; rc; rc = rc->_next)
     {
         if (rc->_icount > 0)
-            count << setw(23) << rc->_name << " "
-                  << setw(15) << rc->_image << " "
-                  << setw(18) << hex << rc->_address << dec <<" "
-                  << setw(12) << rc->_rtnCount << " "
-                  << setw(12) << rc->_icount << endl;
+            data << rc->_name << ","
+                 << rc->_image << ","
+                 << hex << rc->_address << dec << ","
+                 << rc->_rtnCount << ","
+                 << rc->_icount << endl;
     }
 
 }
