@@ -9,6 +9,9 @@ using namespace std;
 extern VOID function_handler(RTN, VOID*);
 extern VOID app_exit_handler(INT32, VOID*);
 
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "profile_data.out", "specify profile results file");
+
 INT32 usage()
 {
     cerr << "This Pintool counts the number of times a routine is executed" << endl;

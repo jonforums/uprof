@@ -108,7 +108,7 @@ VOID function_handler(RTN rtn, VOID *v)
 // It prints the name and count for each procedure
 VOID app_exit_handler(INT32 code, VOID *v)
 {
-	// TODO enable cmd line option for output file
+	// FIXME use the value from `KnobOutputFile`
     ofstream data("profile_data.out");
 
     data << "Procedure" << ","
