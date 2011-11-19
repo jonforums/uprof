@@ -1,6 +1,6 @@
 // Copyright (c) 2011, Jon Maken
 // License: 3-clause BSD
-// Revision: 11/17/2011 4:41:00 PM
+// Revision: 11/19/2011 10:34:02 AM
 
 /*
 Intel Open Source License
@@ -48,21 +48,21 @@ typedef struct RtnCount
     RTN _rtn;
     UINT64 _rtnCount;
     UINT64 _icount;
-    struct RtnCount * _next;
+    struct RtnCount* _next;
 } RTN_COUNT;
 
 // Linked list of instruction counts for each routine
-RTN_COUNT * RtnList = 0;
+RTN_COUNT* RtnList = 0;
 
 // This function is called before every instruction is executed
-VOID docount(UINT64 * counter)
+VOID docount(UINT64* counter)
 {
     (*counter)++;
 }
 
-const char * StripPath(const char * path)
+const char* StripPath(const char* path)
 {
-    const char * file = strrchr(path,'/');
+    const char* file = strrchr(path,'/');
     if (file)
         return file+1;
     else
@@ -70,11 +70,11 @@ const char * StripPath(const char * path)
 }
 
 // Pin calls this function every time a new rtn is executed
-VOID function_handler(RTN rtn, VOID *v)
+VOID function_handler(RTN rtn, VOID* v)
 {
 
     // Allocate a counter for this routine
-    RTN_COUNT * rc = new RTN_COUNT;
+    RTN_COUNT* rc = new RTN_COUNT;
 
     // The RTN goes away when the image is unloaded, so save it now
     // because we need it in the fini
@@ -106,7 +106,7 @@ VOID function_handler(RTN rtn, VOID *v)
 
 // This function is called when the application exits
 // It prints the name and count for each procedure
-VOID app_exit_handler(INT32 code, VOID *v)
+VOID app_exit_handler(INT32 code, VOID* v)
 {
 	// FIXME use the value from `KnobOutputFile`
     ofstream data("profile_data.out");
@@ -117,7 +117,7 @@ VOID app_exit_handler(INT32 code, VOID *v)
          << "Calls" << ","
          << "Instructions" << endl;
 
-    for (RTN_COUNT * rc = RtnList; rc; rc = rc->_next)
+    for (RTN_COUNT* rc = RtnList; rc; rc = rc->_next)
     {
         if (rc->_icount > 0)
             data << rc->_name << ","
