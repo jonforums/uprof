@@ -39,6 +39,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string.h>
 #include "pin.H"
 
+extern KNOB<string> ProfileOutputFile;
+
 // Holds instruction count for a single procedure
 typedef struct RtnCount
 {
@@ -108,8 +110,7 @@ VOID function_handler(RTN rtn, VOID* v)
 // It prints the name and count for each procedure
 VOID app_exit_handler(INT32 code, VOID* v)
 {
-	// FIXME use the value from `KnobOutputFile`
-    ofstream data("profile_data.out");
+    ofstream data(ProfileOutputFile.Value().c_str());
 
     data << "Procedure" << ","
          << "Image" << ","

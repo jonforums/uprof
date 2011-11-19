@@ -1,6 +1,6 @@
 // Copyright (c) 2011, Jon Maken
 // License: 3-clause BSD
-// Revision: 11/15/2011 8:38:48 PM
+// Revision: 11/19/2011 10:32:02 AM
 
 #include <iostream>
 #include "pin.H"
@@ -9,8 +9,9 @@ using namespace std;
 extern VOID function_handler(RTN, VOID*);
 extern VOID app_exit_handler(INT32, VOID*);
 
-KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
-    "o", "profile_data.out", "specify profile results file");
+// Command line switches
+KNOB<string> ProfileOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "profile_data.out", "The profile results file path and file name");
 
 INT32 usage()
 {
